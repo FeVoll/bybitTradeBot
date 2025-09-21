@@ -1,4 +1,4 @@
-# Bybit Auto Trader
+# Bybit Level BreakOut Trader
 
 **⚠️ РАБОЧАЯ ВЕРСИЯ ДЛЯ ДОРАБОТОК ⚠️**
 
