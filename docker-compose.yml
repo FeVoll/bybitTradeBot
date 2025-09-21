@@ -1,0 +1,42 @@
+---
+version: '3.8'
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: bybit-trader-db
+    environment:
+      - POSTGRES_USER=${DB_USERNAME:-trader_user}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-trader_password}
+      - POSTGRES_DB=crypto
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  bybit-trader:
+    build: .
+    container_name: bybit-trader-app
+    depends_on:
+      - postgres
+    environment:
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE:-dev}
+      - DB_USERNAME=${DB_USERNAME:-trader_user}
+      - DB_PASSWORD=${DB_PASSWORD:-trader_password}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+      - BYBIT_API_KEY=${BYBIT_API_KEY}
+      - BYBIT_API_SECRET=${BYBIT_API_SECRET}
+      - BYBIT_API_KEY_S=${BYBIT_API_KEY_S}
+      - BYBIT_API_SECRET_S=${BYBIT_API_SECRET_S}
+    ports:
+      - '8050:8050'
+    volumes:
+      - ./logs:/app/logs
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+
+
