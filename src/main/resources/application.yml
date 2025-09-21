@@ -1,0 +1,15 @@
+server:
+  port: 8050
+
+spring:
+  datasource:
+    driver-class: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/crypto
+    username: ${DB_USERNAME:your_username}
+    password: ${DB_PASSWORD:your_password}
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  profiles:
+    active: dev
